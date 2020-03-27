@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		07C658AB242D8540005C638F /* UserPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C658AA242D8540005C638F /* UserPostsView.swift */; };
+		07C658AD242D8A17005C638F /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C658AC242D8A17005C638F /* PostRow.swift */; };
 		07D81DF6242D3B6700DB5135 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D81DF5242D3B6700DB5135 /* AppDelegate.swift */; };
 		07D81DF8242D3B6700DB5135 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D81DF7242D3B6700DB5135 /* SceneDelegate.swift */; };
 		07D81DFD242D3B6700DB5135 /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D81DFC242D3B6700DB5135 /* UsersView.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		07C658AA242D8540005C638F /* UserPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostsView.swift; sourceTree = "<group>"; };
+		07C658AC242D8A17005C638F /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
 		07D81DF2242D3B6700DB5135 /* SocialNetwork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialNetwork.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		07D81DF5242D3B6700DB5135 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		07D81DF7242D3B6700DB5135 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		07D81E23242D41B400DB5135 /* PostRow */ = {
 			isa = PBXGroup;
 			children = (
+				07C658AC242D8A17005C638F /* PostRow.swift */,
 			);
 			path = PostRow;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				07D81DF8242D3B6700DB5135 /* SceneDelegate.swift in Sources */,
 				07D81E25242D440300DB5135 /* UserRow.swift in Sources */,
 				07D81E29242D6C5F00DB5135 /* Post.swift in Sources */,
+				07C658AD242D8A17005C638F /* PostRow.swift in Sources */,
 				07D81DFD242D3B6700DB5135 /* UsersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

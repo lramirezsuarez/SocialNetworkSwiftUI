@@ -11,13 +11,22 @@ import SwiftUI
 struct UserPostsView: View {
     @State private var posts = [Post]()
     let userId: Int
+    var userName: String
     
     var body: some View {
         List {
-            ForEach(posts) { post in
-                Text(post.body)
+            if posts.count > 0 {
+                ForEach(posts) { post in
+                    PostRow(post: post)
+                }
+            } else {
+                Text("No posts to shows".uppercased())
+                    .font(.title)
+                    .multilineTextAlignment(.center)
             }
+            
         }.onAppear(perform: loadPosts)
+        .navigationBarTitle(userName)
     }
     
     func loadPosts() {
@@ -32,6 +41,6 @@ struct UserPostsView: View {
 
 struct UserPostsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserPostsView(userId: 1)
+        UserPostsView(userId: 1, userName: "Lucho")
     }
 }

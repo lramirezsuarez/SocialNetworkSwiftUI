@@ -14,11 +14,36 @@ struct UserRow: View {
     var body: some View {
         HStack {
             VStack {
-                Text(user.name)
-                Text(user.phone)
-                Text(user.email)
                 HStack {
-                    Text("Ver publicaciones")
+                    Text("\(user.name) - \(user.username)")
+                        .bold()
+                        .foregroundColor(Color(red: 0.273, green: 0.455, blue: 0.303))
+                        .font(.title)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                HStack {
+                    Image(systemName: "phone.fill")
+                        .foregroundColor(Color(red: 0.273, green: 0.455, blue: 0.303))
+                    Text(user.phone)
+                        .font(.footnote)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                HStack {
+                    Image(systemName: "envelope.fill")
+                        .foregroundColor(Color(red: 0.273, green: 0.455, blue: 0.303))
+                    Text(user.email)
+                        .font(.footnote)
+                        .multilineTextAlignment(.leading)
+                    Spacer()
+                }
+                HStack {
+                    Spacer()
+                    Text("Open publications")
+                        .foregroundColor(Color(red: 0.273, green: 0.455, blue: 0.303))
+                        .font(.headline)
+                        .multilineTextAlignment(.trailing)
                 }
                 Spacer()
             }
@@ -29,7 +54,7 @@ struct UserRow: View {
 
 struct UserRow_Previews: PreviewProvider {
     static var previews: some View {
-        UserRow(user: userTest).previewLayout(.fixed(width: 300, height: 100))
+        UserRow(user: userTest).previewLayout(.fixed(width: 400, height: 200))
     }
 }
 
