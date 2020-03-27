@@ -9,13 +9,29 @@
 import SwiftUI
 
 struct UserPostsView: View {
+    @State private var posts = [Post]()
+    let userId: Int
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List {
+            ForEach(posts) { post in
+                Text(post.body)
+            }
+        }.onAppear(perform: loadPosts)
+    }
+    
+    func loadPosts() {
+        DataRequest.loadUserPosts(with: userId) { posts in
+            guard let userPosts = posts else {
+                return
+            }
+            self.posts = userPosts
+        }
     }
 }
 
 struct UserPostsView_Previews: PreviewProvider {
     static var previews: some View {
-        UserPostsView()
+        UserPostsView(userId: 1)
     }
 }

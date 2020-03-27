@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct UsersView: View {
     @State private var users = [User]()
     
     var body: some View {
@@ -20,6 +20,7 @@ struct ContentView: View {
                     }
                 }
             }.onAppear(perform: loadData)
+            .navigationBarTitle("Users")
         }
     }
     
@@ -33,8 +34,8 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct UsersView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        UsersView()
     }
 }
