@@ -11,6 +11,7 @@ import SwiftUI
 struct UsersView: View {
     @State private var users = [User]()
     @State private var userSearch: String = ""
+    @State private var isLoading = false
     
     var body: some View {
         NavigationView {
@@ -40,7 +41,7 @@ struct UsersView: View {
                             }
                         }
                     }
-                }
+                }.body
                 .onAppear(perform: loadData)
                 .navigationBarTitle("Users")
             }
@@ -48,7 +49,9 @@ struct UsersView: View {
     }
     
     func loadData() {
+        self.isLoading = true
         DataRequest.loadUsers { users in
+            self.isLoading = false
             guard let receivedUsers = users else {
                 return
             }

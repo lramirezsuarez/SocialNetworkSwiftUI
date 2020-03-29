@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 protocol DataRequestProtocol {
     static func loadUsers(completion: @escaping (([User]?) -> Void))
@@ -16,13 +17,22 @@ protocol DataRequestProtocol {
 struct DataRequest: DataRequestProtocol {
 
     static func loadUsers(completion: @escaping (([User]?) -> Void)) {
-        loadUsersFromNetwork { users in
-            guard let networkUsers = users else {
-                completion(nil)
-                return
+        loadUsersFromRealm { realmUsers in
+            if let users = realmUsers, users.count > 0 {
+                completion(users)
+            } else {
+                loadUsersFromNetwork { users in
+                    guard let networkUsers = users else {
+                        completion(nil)
+                        return
+                    }
+                    
+                    saveUsersToRealm(users: networkUsers)
+                    completion(networkUsers)
+                }
             }
-            completion(networkUsers)
         }
+        
     }
     
     static func loadUserPosts(with userId: Int, completion: @escaping (([Post]?) -> Void)) {
@@ -33,6 +43,21 @@ struct DataRequest: DataRequestProtocol {
             }
             completion(posts)
         }
+    }
+    
+    static private func loadUsersFromRealm(completion: @escaping (([User]?) -> Void)) {
+        let userStore = UserStore()
+        let realmUsers = Array(userStore.retrieveUsers())
+        let users = realmUsers.map { User(id: $0.id, name: $0.name, username: $0.username, email: $0.email, phone: $0.phone) }
+        
+        completion(users)
+    }
+    
+    static private func saveUsersToRealm(users: [User]) {
+        let userStore = UserStore()
+        users.forEach({ user in
+            userStore.saveUser(user.managedObject())
+        })
     }
     
     static private func loadUsersFromNetwork(completion: @escaping (([User]?) -> Void)) {
