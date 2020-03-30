@@ -21,11 +21,13 @@ struct UsersView: View {
                         Spacer()
                         TextField("Search...", text: self.$userSearch)
                             .padding(.leading, 12)
-                        Button(action: {
-                            self.userSearch = ""
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.gray)
+                        if self.userSearch != "" {
+                            Button(action: {
+                                self.userSearch = ""
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .foregroundColor(.gray)
+                            }
                         }
                         Image(systemName: "magnifyingglass.circle")
                             .foregroundColor(Color(red: 0.273, green: 0.455, blue: 0.303))
@@ -34,17 +36,29 @@ struct UsersView: View {
                     }
                     List {
                         if self.filterUsers().count == 0 {
-                            Text("List is empty.").font(.largeTitle).multilineTextAlignment(.center)
+                            Text("List is empty.")
+                                .font(.largeTitle)
+                                .multilineTextAlignment(.center)
                         } else {
                             ForEach(self.filterUsers()) { user in
-                                NavigationLink(destination: UserPostsView(userId: user.id, userName: user.name)) {
+                                NavigationLink(destination:
+                                UserPostsView(userId: user.id, userName: user.name)) {
                                     UserRow(user: user)
                                 }
                             }
                         }
                     }.body
                         .onAppear(perform: self.loadData)
-                    .navigationBarTitle("Users")
+                        .navigationBarTitle("Users", displayMode: .large)
+                        .navigationBarItems(trailing:
+                            Button(action: {
+                            self.isLoading = true
+                            self.loadData()
+                        }, label: {
+                            Image(systemName: "arrow.clockwise")
+                                .foregroundColor(.black)
+                                .padding(.trailing, 12)
+                        }))
                 }
             }
         }

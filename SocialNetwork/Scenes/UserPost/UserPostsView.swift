@@ -26,8 +26,10 @@ struct UserPostsView: View {
                         .font(.title)
                         .multilineTextAlignment(.center)
                 }
-            }.onAppear(perform: self.loadPosts)
-                .navigationBarTitle(self.userName)
+            }
+            .onAppear(perform: self.loadPosts)
+            .navigationBarTitle(self.userName)
+            .listSeparatorStyleNone()
         }
     }
     

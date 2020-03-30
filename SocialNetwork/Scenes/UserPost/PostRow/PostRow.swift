@@ -14,10 +14,15 @@ struct PostRow: View {
     var body: some View {
         VStack {
             HStack {
-                Text(post.title).bold().font(.title).multilineTextAlignment(.leading)
+                Text(post.title)
+                    .bold()
+                    .font(.title)
+                    .multilineTextAlignment(.leading)
                 Spacer()
             }
-            Text(post.body).font(.body).multilineTextAlignment(.leading)
+            Text(post.body)
+                .font(.body)
+                .multilineTextAlignment(.leading)
         }
     }
 }
