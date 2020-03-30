@@ -11,45 +11,46 @@ import SwiftUI
 struct UsersView: View {
     @State private var users = [User]()
     @State private var userSearch: String = ""
-    @State private var isLoading = false
+    @State private var isLoading = true
     
     var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Spacer()
-                    TextField("Search...", text: $userSearch)
-                        .padding(.leading, 12)
-                    Button(action: {
-                        self.userSearch = ""
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
+        LoadingView(isShowing: $isLoading) {
+            NavigationView {
+                VStack {
+                    HStack {
+                        Spacer()
+                        TextField("Search...", text: self.$userSearch)
+                            .padding(.leading, 12)
+                        Button(action: {
+                            self.userSearch = ""
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.gray)
+                        }
+                        Image(systemName: "magnifyingglass.circle")
+                            .foregroundColor(Color(red: 0.273, green: 0.455, blue: 0.303))
+                            .padding(.trailing, 12)
+                        Spacer()
                     }
-                    Image(systemName: "magnifyingglass.circle")
-                        .foregroundColor(Color(red: 0.273, green: 0.455, blue: 0.303))
-                        .padding(.trailing, 12)
-                    Spacer()
-                }
-                List {
-                    if filterUsers().count == 0 {
-                        Text("List is empty.").font(.largeTitle).multilineTextAlignment(.center)
-                    } else {
-                        ForEach(filterUsers()) { user in
-                            NavigationLink(destination: UserPostsView(userId: user.id, userName: user.name)) {
-                                UserRow(user: user)
+                    List {
+                        if self.filterUsers().count == 0 {
+                            Text("List is empty.").font(.largeTitle).multilineTextAlignment(.center)
+                        } else {
+                            ForEach(self.filterUsers()) { user in
+                                NavigationLink(destination: UserPostsView(userId: user.id, userName: user.name)) {
+                                    UserRow(user: user)
+                                }
                             }
                         }
-                    }
-                }.body
-                .onAppear(perform: loadData)
-                .navigationBarTitle("Users")
+                    }.body
+                        .onAppear(perform: self.loadData)
+                    .navigationBarTitle("Users")
+                }
             }
         }
     }
     
     func loadData() {
-        self.isLoading = true
         DataRequest.loadUsers { users in
             self.isLoading = false
             guard let receivedUsers = users else {

@@ -10,27 +10,30 @@ import SwiftUI
 
 struct UserPostsView: View {
     @State private var posts = [Post]()
+    @State private var isLoading = true
     let userId: Int
     var userName: String
     
     var body: some View {
-        List {
-            if posts.count > 0 {
-                ForEach(posts) { post in
-                    PostRow(post: post)
+        LoadingView(isShowing: $isLoading) {
+            List {
+                if self.posts.count > 0 {
+                    ForEach(self.posts) { post in
+                        PostRow(post: post)
+                    }
+                } else if !self.isLoading && self.posts.count == 0 {
+                    Text("No posts to shows".uppercased())
+                        .font(.title)
+                        .multilineTextAlignment(.center)
                 }
-            } else {
-                Text("No posts to shows".uppercased())
-                    .font(.title)
-                    .multilineTextAlignment(.center)
-            }
-            
-        }.onAppear(perform: loadPosts)
-        .navigationBarTitle(userName)
+            }.onAppear(perform: self.loadPosts)
+                .navigationBarTitle(self.userName)
+        }
     }
     
     func loadPosts() {
         DataRequest.loadUserPosts(with: userId) { posts in
+            self.isLoading = false
             guard let userPosts = posts else {
                 return
             }

@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import RealmSwift
 @testable import SocialNetwork
 
 class UserStoreTest: XCTestCase {
@@ -14,7 +15,10 @@ class UserStoreTest: XCTestCase {
     let userStore = UserStore()
 
     override func setUp() {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        Realm.Configuration.defaultConfiguration.inMemoryIdentifier = self.name
+            
+        let realm = try! Realm()
+        userStore.realm = realm
     }
 
     override func tearDown() {
@@ -22,9 +26,13 @@ class UserStoreTest: XCTestCase {
     }
 
     func testRetrieveUser() {
-        let userRetrieved = userStore.retrieveUsers().last
+        let userId = 1
+        guard let userRetrieved = try? userStore.retrieveUsers().filter(NSPredicate(format: "id = %i", userId)) else {
+            XCTAssert(false, "Did not an user.")
+            return
+        }
         
-        XCTAssert(500 == userRetrieved?.id, "Wrong object retrieved from the database.")
+        XCTAssert(userId == userRetrieved.first?.id, "Wrong object retrieved from the database.")
     }
     
     

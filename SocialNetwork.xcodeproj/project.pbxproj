@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		074C3B0B2431268200264D58 /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074C3B0A2431268200264D58 /* Persistable.swift */; };
 		074C3B0D24312BB500264D58 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 074C3B0C24312BB500264D58 /* UserStore.swift */; };
+		07B89A31243192C50096F8E6 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B89A30243192C50096F8E6 /* LoadingView.swift */; };
 		07B9FDE2243149C8009CAC14 /* UserStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B9FDE1243149C8009CAC14 /* UserStoreTest.swift */; };
 		07B9FDE424315365009CAC14 /* ActivityIndicatorView+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B9FDE324315365009CAC14 /* ActivityIndicatorView+SwiftUI.swift */; };
 		07C658AB242D8540005C638F /* UserPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07C658AA242D8540005C638F /* UserPostsView.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		074C3B0A2431268200264D58 /* Persistable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
 		074C3B0C24312BB500264D58 /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
+		07B89A30243192C50096F8E6 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		07B9FDE1243149C8009CAC14 /* UserStoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoreTest.swift; sourceTree = "<group>"; };
 		07B9FDE324315365009CAC14 /* ActivityIndicatorView+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActivityIndicatorView+SwiftUI.swift"; sourceTree = "<group>"; };
 		07C658AA242D8540005C638F /* UserPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPostsView.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				07B9FDE324315365009CAC14 /* ActivityIndicatorView+SwiftUI.swift */,
+				07B89A30243192C50096F8E6 /* LoadingView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				07D81E25242D440300DB5135 /* UserRow.swift in Sources */,
 				07D81E29242D6C5F00DB5135 /* Post.swift in Sources */,
 				07C658AD242D8A17005C638F /* PostRow.swift in Sources */,
+				07B89A31243192C50096F8E6 /* LoadingView.swift in Sources */,
 				07D81DFD242D3B6700DB5135 /* UsersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

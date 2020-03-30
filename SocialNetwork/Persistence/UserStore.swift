@@ -9,16 +9,44 @@
 import Foundation
 import RealmSwift
 
+enum RuntimeError: Error {
+    case NoRealmSet
+}
+
 final class UserStore {
-    var realm: Realm = try! Realm()
+    var realm: Realm?
     
-    public func saveUser(_ user: UserObject) {
-        try! realm.write {
-            realm.add(user)
+    public func saveUser(_ user: UserObject) throws {
+        if realm != nil {
+            try! realm!.write {
+                realm!.add(user)
+            }
+        } else {
+            RuntimeError.NoRealmSet
+        }
+        
+    }
+    
+    public func saveUsers(_ users: [User]) {
+        do {
+            try users.forEach({ user in
+                do {
+                    try saveUser(user.managedObject())
+                } catch RuntimeError.NoRealmSet {
+                    print(RuntimeError.NoRealmSet.localizedDescription)
+                }
+            })
+        } catch {
+            print("Unexpected error")
         }
     }
     
-    public func retrieveUsers() -> Results<UserObject> {
-        return realm.objects(UserObject.self)
+    public func retrieveUsers() throws -> Results<UserObject> {
+        if realm != nil {
+            return realm!.objects(UserObject.self)
+        } else {
+            throw RuntimeError.NoRealmSet
+        }
+        
     }
 }

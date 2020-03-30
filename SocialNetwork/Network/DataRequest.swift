@@ -37,27 +37,32 @@ struct DataRequest: DataRequestProtocol {
     
     static func loadUserPosts(with userId: Int, completion: @escaping (([Post]?) -> Void)) {
         loadPostsFromNetwork(with: userId) { posts in
-            guard let posts = posts else {
+            guard let networkPosts = posts else {
                 completion(nil)
                 return
             }
-            completion(posts)
+            completion(networkPosts)
         }
     }
     
     static private func loadUsersFromRealm(completion: @escaping (([User]?) -> Void)) {
         let userStore = UserStore()
-        let realmUsers = Array(userStore.retrieveUsers())
-        let users = realmUsers.map { User(id: $0.id, name: $0.name, username: $0.username, email: $0.email, phone: $0.phone) }
+        userStore.realm = try! Realm()
+        
+        guard let realmUsers = try? userStore.retrieveUsers() else {
+            completion(nil)
+            return
+        }
+        
+        let users = Array(realmUsers).map { User(managedObject: $0) }
         
         completion(users)
     }
     
     static private func saveUsersToRealm(users: [User]) {
         let userStore = UserStore()
-        users.forEach({ user in
-            userStore.saveUser(user.managedObject())
-        })
+        userStore.realm = try! Realm()
+        userStore.saveUsers(users)
     }
     
     static private func loadUsersFromNetwork(completion: @escaping (([User]?) -> Void)) {
