@@ -47,6 +47,13 @@ final class UserStore {
         } else {
             throw RuntimeError.NoRealmSet
         }
-        
+    }
+    
+    public func retrieveUser(_ id: Int) throws -> Results<UserObject> {
+        if realm != nil {
+            return realm!.objects(UserObject.self).filter(NSPredicate(format: "id = %i", id))
+        } else {
+            throw RuntimeError.NoRealmSet
+        }
     }
 }

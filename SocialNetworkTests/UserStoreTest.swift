@@ -24,17 +24,39 @@ class UserStoreTest: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testRetrieveUser() {
-        let userId = 1
-        guard let userRetrieved = try? userStore.retrieveUsers().filter(NSPredicate(format: "id = %i", userId)) else {
-            XCTAssert(false, "Did not an user.")
-            return
-        }
-        
-        XCTAssert(userId == userRetrieved.first?.id, "Wrong object retrieved from the database.")
-    }
     
+    func testSaveAndRetrieveUser() {
+        let user = User(id: 20, name: "Prueba", username: "probando123", email: "p@p.c", phone: "1234567890")
+        
+        do {
+            try userStore.saveUser(user.managedObject())
+            let savedUsers = try userStore.retrieveUser(20)
+            XCTAssert(savedUsers.count == 1, "Something failed retrieving the user.")
+            
+            XCTAssert(savedUsers.first?.name == "Prueba", "Wrong user retrieved.")
+        } catch RuntimeError.NoRealmSet {
+            XCTAssert(false, "No realm database was set")
+        } catch {
+            XCTAssert(false, "Unexpected error \(error)")
+        }
+    }
+
+    func testRetrieveUsers() {
+        let users = [User(id: 1, name: "1", username: "1", email: "1", phone: "1"),
+                     User(id: 2, name: "2", username: "2", email: "2", phone: "2"),
+                     User(id: 3, name: "3", username: "3", email: "3", phone: "3")]
+
+        userStore.saveUsers(users)
+        
+        do {
+            let retrievedUsers = try userStore.retrieveUsers()
+            XCTAssert(users.count == retrievedUsers.count, "Different amount of users saved.")
+        } catch RuntimeError.NoRealmSet {
+            XCTAssert(false, "No realm database was set")
+        } catch {
+            XCTAssert(false, "Unexpected error \(error)")
+        }
+    }
     
 
 }

@@ -56,7 +56,6 @@ struct UsersView: View {
                             self.loadData()
                         }, label: {
                             Image(systemName: "arrow.clockwise")
-                                .foregroundColor(.black)
                                 .padding(.trailing, 12)
                         }))
                 }
